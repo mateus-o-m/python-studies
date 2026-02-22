@@ -1,0 +1,11 @@
+# forcing text to LF
+* text = auto eof = lf
+
+# python and csv to LF
+*.py text eol = lf
+*.csv text eol = lf
+
+# binary archives
+*.png binary
+*.jpg binary
+*.zip binary
