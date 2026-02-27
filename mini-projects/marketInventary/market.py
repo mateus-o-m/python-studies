@@ -14,10 +14,9 @@ def addProduct (dicProduct, listStock):
 
 def countProduct (listStock):
 	productAmount = []
-	for name in listStock:
-		countVar = 0
-		# countVar = countVar + listStock[listStock.index(name)]
-		dicVar = {"name": listStock["name"], "amount": listStcock["amount"]}
+	for product in listStock:
+		countVar += product["amount"]
+		dicVar = {"name": product["name"], "amount": product["amount"]}
 		productAmount.append (dicVar)
 	return productAmount
 
@@ -27,6 +26,7 @@ marketStock = []
 # print (type(products))
 
 addProduct (products, marketStock)
+addProduct (products, marketStock)
 print (countProduct (marketStock))
 
-print (marketStock)
+print (marketStock[0])
