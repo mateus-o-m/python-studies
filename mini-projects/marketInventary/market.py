@@ -12,11 +12,21 @@ def addProduct (dicProduct, listStock):
 	dicProduct["amount"] = int (input("DIgite a quantidade de {dicProduct['name']}:"))
 	listStock.append(dicProduct)
 
+def countProduct (listStock):
+	productAmount = []
+	for name in listStock:
+		countVar = 0
+		# countVar = countVar + listStock[listStock.index(name)]
+		dicVar = {"name": listStock["name"], "amount": listStcock["amount"]}
+		productAmount.append (dicVar)
+	return productAmount
+
 # main()
 products = {"name": "nome", "id": 0, "price": 0.0, "amount": 0}
 marketStock = []
 # print (type(products))
 
 addProduct (products, marketStock)
+print (countProduct (marketStock))
 
 print (marketStock)
