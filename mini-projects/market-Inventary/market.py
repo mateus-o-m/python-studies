@@ -6,7 +6,7 @@ def verifyInput (dataType, messageString, default = None):
 	print (messageString, end = "")
 	while (1):
 		inputAux = input().strip() # espaços em branco não serão considerados
-		if inputAux == "" and default is not None: # suporte á entradas vazias
+		if (inputAux == "") and (default) is not None: # suporte á entradas vazias
 			return default # retorna valor nulo
 		try:
 			value = dataType (inputAux)
