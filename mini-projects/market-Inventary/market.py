@@ -25,19 +25,17 @@ def menu (listStock):
 		menuOption = verifyInput (int, "Digite o número correspondente á ação desejada: ",)
 		# lambda: cria uma função anônima para ser usada por outra função,
 		# funciona como um atalho da função
-		functions = {1: (lambda: subMenu (lambda: addProduct (listStock, id))),
-		2: (lambda: viewStockAmount (listStock))}
-		if menuOption == 0:
-			print ("Finalizando programa.")
+		if menuOption == 1:
+			subMenu (lambda: addProduct (listStock, id))
+			viewStock (listStock) # exibe lista de produtos após edição
+		elif menuOption == 2:
+			viewStockAmount (listStock)
+		elif menuOption == 0:
 			break
-		elif menuOption in functions:
-			functions [menuOption]()
 		else:
 			print ("Opção inválida.")
-			continue
-		if menuOption != 2: # apenas se a função exibir quantidade não for chamada
-			viewStock (listStock)
 
+# função reutilizável que reitera sobre outra função
 def subMenu (function):
 	function()
 	while (1):
