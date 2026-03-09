@@ -1,6 +1,10 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import kagglehub
 path = kagglehub.dataset_download("jealousleopard/goodreadsbooks")
+
+def printOnConsole (str, func):
+	print ("\n", str, "\n", func)
 
 # extração de dados
 dfbook = pd.read_csv(f"{path}/books.csv", sep = ",", on_bad_lines = "skip")
@@ -9,9 +13,8 @@ print (dfbook.head())
 print (dfbook.sample (5))
 dfbook.info()
 
-# analizando dados
-print ("\n Quantdade de valores nulos: \n",
-	dfbook.isnull().sum())
+# analisando dados
+printOnConsole ("Quantdade de valores nulos:", lambda: dfbook.isnull().sum())
 print ("\n Atributos numéricos: \n",
 	dfbook.describe())
 print ("\n Checagem de linhas duplicadas: \n",
