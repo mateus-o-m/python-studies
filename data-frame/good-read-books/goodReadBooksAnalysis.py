@@ -28,21 +28,21 @@ print ("\n Livros sem reviews: \n",
 	dfbook [dfbook.ratings_count == 0].shape)
 print ("\n Livros com menos de 30 páginas: \n",
 	dfbook [dfbook["  num_pages"] < 30].shape)
-print ("\n Duplicated titles and language: \n",
+print ("\n Checagem de títulos e idiomas duplicados: \n",
 	dfbook [dfbook.duplicated (["title", "language_code"])].sort_values ("title"))
 
 # limpando dados
-print ("\n Original data frame structure: \n",
+print ("\n Estrutura de dados inicial: \n",
 	dfbook.info())
 dfbook.drop (["isbn", "isbn13", "bookID"], axis = 1, inplace = True)
-print ("\n Data frame after isbn, isbn13 and bookID removal: \n", 
+print ("\n Estrutura de dados após remoção de isbn, isbn13 e bookID: \n", 
 	dfbook.info())
 dfbook.rename (columns = {"  num_pages":"num_pages"}, inplace = True)
-print ("\n Data frame after num_pages rename: \n", 
+print ("\n Estrutura de dados após correção do texto num_pages: \n", 
 	dfbook.info())
 dfbook.drop (dfbook [(dfbook.ratings_count == 0) | (dfbook.num_pages < 30)].index, inplace = True)
 dfbook.reset_index (drop = True, inplace = True)
-print ("\n Data frame after ratings_count == 0 and num_pages < 30 removal: \n", 
+print ("\n Estrutura de dados após remoção dos livros sem reviews e com menos de 30 páginas: \n", 
 	dfbook.info())
 
 # formatando datas de publicação
@@ -53,10 +53,10 @@ for index, bookDate in enumerate (dfbook["publication_date"]):
 	except ValueError:
 		invalidDates.append ((index, bookDate))
 dfbook.drop (index = [index for (index, _) in invalidDates], inplace = True)
-print ("\n Data frame after invalid dates removal: \n", 
+print ("\n Estrutura de dados após remoção de datas de publicação inválidas: \n", 
 	dfbook.info())
 dfbook["publication_date"] = pd.to_datetime (dfbook["publication_date"], format = "%d/%m/%Y")
-print ("\n publication_date column after formating: \n", 
+print ("\n Coluna publication_date após formatação: \n", 
 	dfbook.publication_date.dt.strftime ("%d/%m/%Y"))
 
 # agrupando dados
