@@ -9,24 +9,24 @@ print (dfbook.head())
 print (dfbook.sample (5))
 dfbook.info()
 
-# analisando dados
-print ("\n Quantity of null values: \n",
+# analizando dados
+print ("\n Quantdade de valores nulos: \n",
 	dfbook.isnull().sum())
-print ("\n Numeric statistics atributes: \n",
+print ("\n Atributos numéricos: \n",
 	dfbook.describe())
-print ("\n Duplicated lines check: \n",
+print ("\n Checagem de linhas duplicadas: \n",
 	dfbook [dfbook.duplicated()])
-print ("\n Duplicated isbn values check: \n",
+print ("\n Checagem de valores isbn duplicados: \n",
 	dfbook [dfbook.duplicated ("isbn")])
-print ("\n Duplicated isbn13 values check: \n",
+print ("\n Checagem de valores isbn13 duplicados: \n",
 	dfbook [dfbook.duplicated ("isbn13")])
-print ("\n Duplicated bookID values check: \n",
+print ("\n Checagem de valores bookID duplicados: \n",
 	dfbook [dfbook.duplicated ("bookID")])
-print ("\n Books with text review counts higher than rating counts \n",
+print ("\n Livros com reviews em texto maiores que reviews totais: \n",
 	dfbook [dfbook.text_reviews_count > dfbook.ratings_count].shape)
-print ("\n Books with no reviews: \n",
+print ("\n Livros sem reviews: \n",
 	dfbook [dfbook.ratings_count == 0].shape)
-print ("\n Books with less than 30 pages: \n",
+print ("\n Livros com menos de 30 páginas: \n",
 	dfbook [dfbook["  num_pages"] < 30].shape)
 print ("\n Duplicated titles and language: \n",
 	dfbook [dfbook.duplicated (["title", "language_code"])].sort_values ("title"))
@@ -41,7 +41,7 @@ dfbook.rename (columns = {"  num_pages":"num_pages"}, inplace = True)
 print ("\n Data frame after num_pages rename: \n", 
 	dfbook.info())
 dfbook.drop (dfbook [(dfbook.ratings_count == 0) | (dfbook.num_pages < 30)].index, inplace = True)
-dfbook.reset_index(drop = True, inplace = True)
+dfbook.reset_index (drop = True, inplace = True)
 print ("\n Data frame after ratings_count == 0 and num_pages < 30 removal: \n", 
 	dfbook.info())
 
@@ -51,11 +51,25 @@ for index, bookDate in enumerate (dfbook["publication_date"]):
 	try:
 		pd.to_datetime (bookDate, format = "%d/%m/%Y")
 	except ValueError:
-		invalidDates.append((index, bookDate))
+		invalidDates.append ((index, bookDate))
 dfbook.drop (index = [index for (index, _) in invalidDates], inplace = True)
 print ("\n Data frame after invalid dates removal: \n", 
 	dfbook.info())
 dfbook["publication_date"] = pd.to_datetime (dfbook["publication_date"], format = "%d/%m/%Y")
 print ("\n publication_date column after formating: \n", 
-	dfbook.publication_date.dt.strftime("%d/%m/%Y"))
-# grouping 
+	dfbook.publication_date.dt.strftime ("%d/%m/%Y"))
+
+# agrupando dados
+aggregDf = dfbook.groupby (["title", "language_code"]).agg ({
+	"authors": lambda str: "/".join (set(str)),
+	"average_rating": "mean",
+	"num_pages": "max",
+	"ratings_count": "sum",
+	"text_reviews_count": "sum",
+	"publication_date": "min",
+	"publisher": lambda str: "/".join (set(str))
+}).reset_index()
+dfbook = aggregDf
+print ("\n Dados após agrupamento: \n", 
+	dfbook.info())
+
