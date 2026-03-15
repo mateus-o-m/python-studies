@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+import matplotlib as mat
+import tkinter as tk
 
 def mainViewer (df):
    # seleciona os 10 livros mais avaliados
